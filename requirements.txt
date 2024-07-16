@@ -1,0 +1,6 @@
+fastapi==0.110.1
+uvicorn==0.29.0
+loguru==0.7.2
+pycurl==7.45.3
+simplejson
+python3-nmap @ git+https://github.com/nmmapper/python3-nmap@main

@@ -70,7 +70,7 @@ This endpoint scans a specified host and port using Nmap.
 
 ```bash
 curl -X 'GET' \
-  'http://localhost:8000/api/nmap_custom/?host=example.com&port=80'
+  'http://localhost:8000/api/nmap_custom?host=example.com&port=80'
 ```
 
 ### HTTP Custom Agent Endpoint
@@ -91,7 +91,7 @@ This endpoint fetches HTTP request header details from a specified URL.
 
 ```bash
 curl -X 'GET' \
-  'http://localhost:8000/api/http_custom/?url=https://example.com&mode=both'
+  'http://localhost:8000/api/http_custom?url=example.com&mode=both'
 ```
 
 ## Files and Directories

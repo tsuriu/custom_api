@@ -1,0 +1,59 @@
+{
+    "clientName": "Thunder Client",
+    "collectionName": "custom_api",
+    "collectionId": "44be8077-043a-428c-8ecf-265a53cbde42",
+    "dateExported": "2024-07-16T04:13:56.995Z",
+    "version": "1.2",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "9fa3471f-481d-4b42-9db5-455ce4cfdf3a",
+            "colId": "44be8077-043a-428c-8ecf-265a53cbde42",
+            "containerId": "",
+            "name": "check_http_and_certificated",
+            "url": "http://localhost:8000/api/http_custom/?url=google.com&mode=both",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2024-07-16T04:03:09.911Z",
+            "modified": "2024-07-16T04:07:47.618Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "url",
+                    "value": "google.com",
+                    "isPath": false
+                },
+                {
+                    "name": "mode",
+                    "value": "both",
+                    "isPath": false
+                }
+            ]
+        },
+        {
+            "_id": "99da335e-3b04-47d2-a2fb-b603eb7aae34",
+            "colId": "44be8077-043a-428c-8ecf-265a53cbde42",
+            "containerId": "",
+            "name": "check_nmap",
+            "url": "http://localhost:8000/api/nmap_custom/?host=192.168.0.1&port=80",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2024-07-16T04:11:54.898Z",
+            "modified": "2024-07-16T04:12:32.415Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "host",
+                    "value": "192.168.0.1",
+                    "isPath": false
+                },
+                {
+                    "name": "port",
+                    "value": "80",
+                    "isPath": false
+                }
+            ]
+        }
+    ],
+    "ref": "T-pOQbVrfiwCPc3_R_0p7U55HqTnU5DYvJwTABX706MVDsLKNEG1oZqXJW1MJk8rDZY9eve2jod6QRq6_N-6mA"
+}

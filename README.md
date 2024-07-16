@@ -1,9 +1,6 @@
-Certainly! Here is the Markdown content for your README.md file based on the template provided:
+# CUSTOM API
 
-```markdown
-# Project Name
 
-Brief description of your project.
 
 ## Table of Contents
 
@@ -122,4 +119,3 @@ Explain how others can contribute to your project. Include guidelines for pull r
 ## License
 
 Specify the project's license (e.g., MIT, Apache 2.0).
-```

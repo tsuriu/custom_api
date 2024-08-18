@@ -44,24 +44,32 @@ def get_certificate_info(hostname, port=443):
 
     return cert_info
 
+
 def get_http_req_header_details(url):
     try:
         c = pycurl.Curl()
 
-        c.setopt(pycurl.URL, url)              # set url
+        c.setopt(pycurl.URL, url)  # Set URL
         c.setopt(pycurl.FOLLOWLOCATION, 1)
         c.setopt(pycurl.WRITEFUNCTION, lambda bytes: len(bytes))
+
+        # Check if the URL is using HTTPS, if so, ignore SSL verification
+        if 'https' in url:
+            c.setopt(pycurl.SSL_VERIFYPEER, 0)
+            c.setopt(pycurl.SSL_VERIFYHOST, 0)
+
+        c.perform()  # Execute request
         
-        c.perform()  # execute
-        
+        # Get required details
         status_code = c.getinfo(pycurl.HTTP_CODE)
-        dns_time = c.getinfo(pycurl.NAMELOOKUP_TIME)  # DNS time
-        conn_time = c.getinfo(pycurl.CONNECT_TIME)    # TCP/IP 3-way handshaking time
-        starttransfer_time = c.getinfo(pycurl.STARTTRANSFER_TIME)  # time-to-first-byte time
-        total_time = c.getinfo(pycurl.TOTAL_TIME)  # last request time
+        dns_time = c.getinfo(pycurl.NAMELOOKUP_TIME)  # DNS lookup time
+        conn_time = c.getinfo(pycurl.CONNECT_TIME)    # TCP/IP handshake time
+        starttransfer_time = c.getinfo(pycurl.STARTTRANSFER_TIME)  # Time to first byte
+        total_time = c.getinfo(pycurl.TOTAL_TIME)  # Total request time
         
         c.close()
 
+        # Store the details in a dictionary
         http_info = {
             'dns_time': dns_time,
             'status_code': status_code,
@@ -71,21 +79,66 @@ def get_http_req_header_details(url):
         }
         
     except pycurl.error as e:
-        error_message = f'{e}'                
-        matches = ((re.findall(r"\((.*?)\)", error_message))[0]).split(',')
+        error_message = f'{e}'
+        matches = re.findall(r"\((.*?)\)", error_message)
+        match_details = matches[0].split(',') if matches else ['0', 'Unknown error']
         
         logger.error(error_message)
         
+        # Store error details in case of an exception
         http_info = {
             'dns_time': 0,
             'conn_time': 0,
             'starttransfer_time': 0,
             'total_time': 0,
             'status_code': 10000,
-            'error': {'type': int(matches[0]), 'descr': matches[1]} 
+            'error': {'type': int(match_details[0]), 'descr': match_details[1].strip()} 
         }
 
     return http_info
+
+# def get_http_req_header_details(url):
+#     try:
+#         c = pycurl.Curl()
+
+#         c.setopt(pycurl.URL, url)              # set url
+#         c.setopt(pycurl.FOLLOWLOCATION, 1)
+#         c.setopt(pycurl.WRITEFUNCTION, lambda bytes: len(bytes))
+        
+#         c.perform()  # execute
+        
+#         status_code = c.getinfo(pycurl.HTTP_CODE)
+#         dns_time = c.getinfo(pycurl.NAMELOOKUP_TIME)  # DNS time
+#         conn_time = c.getinfo(pycurl.CONNECT_TIME)    # TCP/IP 3-way handshaking time
+#         starttransfer_time = c.getinfo(pycurl.STARTTRANSFER_TIME)  # time-to-first-byte time
+#         total_time = c.getinfo(pycurl.TOTAL_TIME)  # last request time
+        
+#         c.close()
+
+#         http_info = {
+#             'dns_time': dns_time,
+#             'status_code': status_code,
+#             'conn_time': conn_time,
+#             'starttransfer_time': starttransfer_time,
+#             'total_time': total_time
+#         }
+        
+#     except pycurl.error as e:
+#         error_message = f'{e}'                
+#         matches = ((re.findall(r"\((.*?)\)", error_message))[0]).split(',')
+        
+#         logger.error(error_message)
+        
+#         http_info = {
+#             'dns_time': 0,
+#             'conn_time': 0,
+#             'starttransfer_time': 0,
+#             'total_time': 0,
+#             'status_code': 10000,
+#             'error': {'type': int(matches[0]), 'descr': matches[1]} 
+#         }
+
+#     return http_info
 
 def get_website_info(url):
     hostname = url.split("//")[-1].split("/")[0]

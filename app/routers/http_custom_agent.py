@@ -22,5 +22,5 @@ def req_details(url: str = Query(..., description="URL to fetch details from"), 
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail='Fail to parse data',
-        )
+        ) from e
     return data

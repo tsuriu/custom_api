@@ -6,7 +6,7 @@ services:
       dockerfile: Dockerfile
     container_name: zbx_custom
     ports:
-      - "8000:8000"
+      - 8000:8000
     networks:
       - zbx_custom
 
